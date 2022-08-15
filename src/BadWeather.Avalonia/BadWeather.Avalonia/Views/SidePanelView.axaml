@@ -1,0 +1,33 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vmd="clr-namespace:BadWeather.Designer;assembly=BadWeather"
+             xmlns:model="clr-namespace:BadWeather.Models;assembly=BadWeather"
+             mc:Ignorable="d"
+			 d:DesignWidth="200" d:DesignHeight="450"
+             x:Class="BadWeather.Avalonia.Views.SidePanelView">
+
+	<Design.DataContext>
+		<vmd:DesignTimeMainViewModel/>
+	</Design.DataContext>
+	
+	<Grid RowDefinitions="Auto,Auto,*">
+
+		<Button Content="Update" HorizontalAlignment="Stretch"></Button>
+
+		<TextBox Grid.Row="1" Text="Search"></TextBox>
+
+		<ListBox Grid.Row="2"
+				 Items="{Binding Cities}">
+			<ListBox.ItemTemplate>
+				<DataTemplate DataType="model:City">
+					<TextBlock Text="{Binding Name}"/>
+				</DataTemplate>
+			</ListBox.ItemTemplate>
+		</ListBox>
+		
+	</Grid>
+	
+	
+</UserControl>

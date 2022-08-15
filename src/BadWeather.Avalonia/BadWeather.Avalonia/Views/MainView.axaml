@@ -1,0 +1,28 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:local="clr-namespace:BadWeather.Avalonia"
+             xmlns:views="clr-namespace:BadWeather.Avalonia.Views"
+             xmlns:vm="clr-namespace:BadWeather.ViewModels;assembly=BadWeather"
+             xmlns:vmd="clr-namespace:BadWeather.Designer;assembly=BadWeather"
+             mc:Ignorable="d"
+			 d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="BadWeather.Avalonia.Views.MainView">
+
+	<Design.DataContext>
+		<vmd:DesignTimeMainViewModel/>
+	</Design.DataContext>
+
+	<Grid ColumnDefinitions="*,240">
+	
+	<local:UserMapControl MapSource="{Binding Map}"
+						  HorizontalAlignment="Stretch"
+						  VerticalAlignment="Stretch"/>
+
+		
+	<views:SidePanelView Grid.Column="1"></views:SidePanelView>
+		
+	</Grid>
+
+</UserControl>

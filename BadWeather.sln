@@ -1,0 +1,51 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32804.467
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BadWeather", "src\BadWeather\BadWeather.csproj", "{92260AA1-80A1-4EA2-95AE-46290AF93403}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{B5118C00-BB9D-42C9-84E9-A013E36E2D1D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BadWeather.Avalonia", "src\BadWeather.Avalonia\BadWeather.Avalonia\BadWeather.Avalonia.csproj", "{82EC4C77-48C5-4268-81CA-1DD5D99AFAAA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BadWeather.Avalonia.NetCore", "src\BadWeather.Avalonia\BadWeather.Avalonia.NetCore\BadWeather.Avalonia.NetCore.csproj", "{FE3BE908-A0BC-404F-95DB-3921612E954C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BadWeather.Avalonia.Web", "src\BadWeather.Avalonia\BadWeather.Avalonia.Web\BadWeather.Avalonia.Web.csproj", "{7E74CFC9-6433-412B-9A28-6DDD80D37FF6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{92260AA1-80A1-4EA2-95AE-46290AF93403}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{92260AA1-80A1-4EA2-95AE-46290AF93403}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{92260AA1-80A1-4EA2-95AE-46290AF93403}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{92260AA1-80A1-4EA2-95AE-46290AF93403}.Release|Any CPU.Build.0 = Release|Any CPU
+		{82EC4C77-48C5-4268-81CA-1DD5D99AFAAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82EC4C77-48C5-4268-81CA-1DD5D99AFAAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{82EC4C77-48C5-4268-81CA-1DD5D99AFAAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82EC4C77-48C5-4268-81CA-1DD5D99AFAAA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE3BE908-A0BC-404F-95DB-3921612E954C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE3BE908-A0BC-404F-95DB-3921612E954C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE3BE908-A0BC-404F-95DB-3921612E954C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE3BE908-A0BC-404F-95DB-3921612E954C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7E74CFC9-6433-412B-9A28-6DDD80D37FF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E74CFC9-6433-412B-9A28-6DDD80D37FF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E74CFC9-6433-412B-9A28-6DDD80D37FF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E74CFC9-6433-412B-9A28-6DDD80D37FF6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{92260AA1-80A1-4EA2-95AE-46290AF93403} = {B5118C00-BB9D-42C9-84E9-A013E36E2D1D}
+		{82EC4C77-48C5-4268-81CA-1DD5D99AFAAA} = {B5118C00-BB9D-42C9-84E9-A013E36E2D1D}
+		{FE3BE908-A0BC-404F-95DB-3921612E954C} = {B5118C00-BB9D-42C9-84E9-A013E36E2D1D}
+		{7E74CFC9-6433-412B-9A28-6DDD80D37FF6} = {B5118C00-BB9D-42C9-84E9-A013E36E2D1D}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {892E1C86-CDCE-462F-9176-D6AADC945FEB}
+	EndGlobalSection
+EndGlobal
