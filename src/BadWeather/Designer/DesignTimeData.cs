@@ -44,7 +44,7 @@ namespace BadWeather.Designer
         {
             var map = new Map();
             map.Layers.Add(new Layer() { Name = "WorldMap" });
-            map.BackColor = Mapsui.Styles.Color.Red;
+            map.BackColor = Mapsui.Styles.Color.White;
             return map;
         }
 
