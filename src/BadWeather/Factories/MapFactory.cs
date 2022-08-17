@@ -1,4 +1,5 @@
-﻿using BadWeather.Services.Cities;
+﻿using BadWeather.Layers;
+using BadWeather.Services.Cities;
 using BadWeather.Services.OpenWeather;
 using BadWeather.Styles;
 using BruTile;
@@ -65,9 +66,16 @@ namespace BadWeather
                 //Limiter = new ViewportLimiterWithoutLimits(),   
             };
 
+            map.Info += MapOnInfo;
+            var layer = CreateLayer();
+            var layer2 = CreateLayer2(layer);
+            var layer3 = CreateLayer3(layer);
+
             map.Layers.Add(CreateWorldMapLayer());
-            //map.Layers.Add(CreateBingAerialMapLayer());            
-            map.Layers.Add(CreateLayer());
+            //map.Layers.Add(CreateBingAerialMapLayer());                        
+            map.Layers.Add(layer);
+            map.Layers.Add(layer2);
+            map.Layers.Add(layer3);
 
             map.Home = n => n.NavigateTo(rect, Mapsui.Utilities.ScaleMethod.Fill);
 
@@ -75,6 +83,17 @@ namespace BadWeather
 
             return map;
         }
+
+        private static void MapOnInfo(object sender, MapInfoEventArgs e)
+        {
+            var calloutStyle = e.MapInfo?.Feature?.Styles.Where(s => s is CalloutStyle).Cast<CalloutStyle>().FirstOrDefault();
+            if (calloutStyle != null)
+            {
+                calloutStyle.Enabled = !calloutStyle.Enabled;
+                e.MapInfo?.Layer?.DataHasChanged(); // To trigger a refresh of graphics.
+            }
+        }
+
 
         private static TileLayer CreateWorldMapLayer()
         {
@@ -152,14 +171,38 @@ namespace BadWeather
                 return feature;
             });
 
-            return new MemoryLayer
+            var layer = new MemoryLayer
             {
                 Name = "Points with labels",
                 Features = features.ToList(),
-                Style = null,
+                //Style = null,
+                Style = LayerStyles.CreateLabel_Style(),// null,
+                IsMapInfoLayer = true,
             };
+
+            return layer;
         }
 
+        public ILayer CreateLayer2(ILayer layer)
+        {
+            return new VertexOnlyLayer(layer)
+            {
+                Name = "Points with labels",
+                //Style = null,
+                Style = LayerStyles.CreateTopLabelStyle(),
+                IsMapInfoLayer = true,
+            };
+        }
+        public ILayer CreateLayer3(ILayer layer)
+        {
+            return new VertexOnlyLayer(layer)
+            {
+                Name = "Points with labels",
+                //Style = null,
+                Style = LayerStyles.CreateBottomLabelStyle(),
+                IsMapInfoLayer = true,
+            };
+        }
         private static IFeature CreateFeature(OpenWeatherModel city, int population)
         {
             var weather = city.Weathers?.First();
@@ -170,7 +213,13 @@ namespace BadWeather
 
             var feature = new PointFeature(point);
 
-            feature.Styles.AddRange(LayerStyles.CreateLayerStyle(city, population, temp, icon));
+            feature["Name"] = city.Name;
+            feature["Population"] = population;
+            feature["Temperature"] = (int)Math.Round(temp);
+
+            //feature.Styles.AddRange(LayerStyles.CreateLayerStyle(city, population, temp, icon));
+
+            //     feature.Styles.AddRange(LayerStyles.CreateLayerStyle(city, population, temp, icon));
 
             return feature;
         }

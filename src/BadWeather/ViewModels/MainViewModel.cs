@@ -1,8 +1,12 @@
-﻿using BadWeather.Models;
+﻿using BadWeather.Controllers;
+using BadWeather.Models;
 using BadWeather.Services.Cities;
 using DynamicData;
+using InteractiveGeometry;
+using InteractiveGeometry.UI;
 using Mapsui;
 using ReactiveUI;
+using ReactiveUI.Fody.Helpers;
 using Splat;
 using System.Collections.ObjectModel;
 using System.Reactive;
@@ -26,6 +30,10 @@ namespace BadWeather.ViewModels
             _map = (Map)dependencyResolver.GetExistingService<IMap>();
             _citiesDataService = dependencyResolver.GetExistingService<CitiesDataService>();
 
+            Tip = new DrawingTip();
+
+            Tip.Creating("Area 4354.4545");
+
             _cities
                 .Connect()
                 .ObserveOn(RxApp.MainThreadScheduler)
@@ -40,6 +48,26 @@ namespace BadWeather.ViewModels
                 .ToProperty(this, x => x.IsLoading);
 
             Loading.Execute().Subscribe();
+
+            var selector = (ISelector)new BaseSelector();
+
+            selector.Selecting += (s, e) =>
+            {
+                if (s is IFeature feature)
+                {
+                    FeatureInfo = feature.ToFeatureInfo();
+                }
+            };
+
+            selector.Unselecting += (s, e) =>
+            {
+                if (s is IFeature feature)
+                {
+                    FeatureInfo = feature.ToFeatureInfo();
+                }
+            };
+
+            ActualController = new CustomController(selector);
         }
 
         public ReactiveCommand<Unit, Unit> Loading { get; }
@@ -59,6 +87,14 @@ namespace BadWeather.ViewModels
 
         public ReadOnlyObservableCollection<City> Cities => _items;
 
+        [Reactive]
+        public DrawingTip Tip { get; set; }
+
+        [Reactive]
+        public string? FeatureInfo { get; set; }
+
         public Map Map => _map;
+
+        public IController ActualController { get; set; }
     }
 }

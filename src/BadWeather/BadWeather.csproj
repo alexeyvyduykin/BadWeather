@@ -65,4 +65,9 @@
 		<PackageReference Include="NetTopologySuite" Version="2.4.0" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <ProjectReference Include="..\..\samples\InteractiveGeometry.UI\InteractiveGeometry.UI.csproj" />
+	  <ProjectReference Include="..\..\samples\InteractiveGeometry\InteractiveGeometry.csproj" />
+	</ItemGroup>
+
 </Project>

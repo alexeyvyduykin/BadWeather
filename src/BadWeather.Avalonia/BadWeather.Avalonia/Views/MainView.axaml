@@ -15,14 +15,27 @@
 	</Design.DataContext>
 
 	<Grid ColumnDefinitions="*,240">
-	
-	<local:UserMapControl MapSource="{Binding Map}"
-						  HorizontalAlignment="Stretch"
-						  VerticalAlignment="Stretch"/>
 
-		
-	<views:SidePanelView Grid.Column="1"></views:SidePanelView>
-		
+		<local:UserMapControl x:Name="MapControl"
+							  MapSource="{Binding Map}"
+						      Controller="{Binding ActualController}"
+							  TipSource="{Binding Tip}"
+							  HorizontalAlignment="Stretch"
+							  VerticalAlignment="Stretch"/>
+
+		<Border BorderBrush="White"
+				Opacity="0.65"
+				Background="White"
+				BorderThickness="6"
+				VerticalAlignment="Bottom"
+				HorizontalAlignment="Left">
+			<TextBlock Text="{Binding FeatureInfo}"
+					   Foreground="Black"
+					   TextWrapping="Wrap"/>
+		</Border>
+
+		<views:SidePanelView Grid.Column="1"></views:SidePanelView>
+
 	</Grid>
 
 </UserControl>
