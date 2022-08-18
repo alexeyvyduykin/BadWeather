@@ -28,12 +28,6 @@ namespace BadWeather
     public class MapFactory
     {
         private readonly IReadonlyDependencyResolver _dependencyResolver;
-        private static readonly OpenWeatherService _openWeatherService;
-
-        static MapFactory()
-        {
-            _openWeatherService = new OpenWeatherService("fd8fe7226da08b68880c55c35f7ea4f8");
-        }
 
         public MapFactory(IReadonlyDependencyResolver dependencyResolver)
         {
@@ -66,7 +60,6 @@ namespace BadWeather
                 //Limiter = new ViewportLimiterWithoutLimits(),   
             };
 
-            map.Info += MapOnInfo;
             var layer = CreateLayer();
             var layer2 = CreateLayer2(layer);
             var layer3 = CreateLayer3(layer);
@@ -83,17 +76,6 @@ namespace BadWeather
 
             return map;
         }
-
-        private static void MapOnInfo(object sender, MapInfoEventArgs e)
-        {
-            var calloutStyle = e.MapInfo?.Feature?.Styles.Where(s => s is CalloutStyle).Cast<CalloutStyle>().FirstOrDefault();
-            if (calloutStyle != null)
-            {
-                calloutStyle.Enabled = !calloutStyle.Enabled;
-                e.MapInfo?.Layer?.DataHasChanged(); // To trigger a refresh of graphics.
-            }
-        }
-
 
         private static TileLayer CreateWorldMapLayer()
         {
@@ -155,7 +137,7 @@ namespace BadWeather
         public ILayer CreateLayer()
         {
             var citiesDataService = _dependencyResolver.GetExistingService<CitiesDataService>();
-
+            var openWeatherService = _dependencyResolver.GetExistingService<OpenWeatherService>();
             var cities = citiesDataService.GetCitiesAsync().Result;
 
             var features = cities.Select(city =>
@@ -164,7 +146,7 @@ namespace BadWeather
                 var code = city?.Code?.ToUpper() ?? default;
                 var population = city?.Population ?? default;
 
-                var model = Task.Run(async () => await _openWeatherService.GetModelAsync(name, code)).Result;
+                var model = Task.Run(async () => await openWeatherService.GetModelAsync(name, code)).Result;
 
                 var feature = CreateFeature(model, population);
 
@@ -205,8 +187,8 @@ namespace BadWeather
                 Name = "Points with labels",
                 //Style = null,
                 Style = LayerStyles.CreateBottomLabelStyle(),
-            //    Opacity = 0.1f,
-                
+                //    Opacity = 0.1f,
+
                 IsMapInfoLayer = true,
             };
         }

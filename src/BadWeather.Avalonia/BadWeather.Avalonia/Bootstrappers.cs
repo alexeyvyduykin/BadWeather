@@ -1,4 +1,5 @@
 ﻿using BadWeather.Services.Cities;
+using BadWeather.Services.OpenWeather;
 using BadWeather.ViewModels;
 using Splat;
 
@@ -28,6 +29,7 @@ namespace BadWeather.Avalonia
             var viewModelFactory = resolver.GetExistingService<ViewModelFactory>();
 
             services.RegisterConstant<CitiesDataService>(new CitiesDataService());
+            services.RegisterConstant<OpenWeatherService>(new OpenWeatherService("fd8fe7226da08b68880c55c35f7ea4f8"));
             services.RegisterConstant(mapFactory.CreateMap(), typeof(Mapsui.IMap));
 
             services.RegisterLazySingleton<MainViewModel>(() => new MainViewModel(resolver));

@@ -3,29 +3,36 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vmd="clr-namespace:BadWeather.Designer;assembly=BadWeather"
-             xmlns:model="clr-namespace:BadWeather.Models;assembly=BadWeather"
+             xmlns:views="clr-namespace:BadWeather.Avalonia.Views"
+             xmlns:vm="clr-namespace:BadWeather.ViewModels;assembly=BadWeather"
              mc:Ignorable="d"
-			 d:DesignWidth="200" d:DesignHeight="450"
+			 d:DesignWidth="280" d:DesignHeight="480"
              x:Class="BadWeather.Avalonia.Views.SidePanelView">
 
 	<Design.DataContext>
 		<vmd:DesignTimeMainViewModel/>
 	</Design.DataContext>
 	
-	<Grid RowDefinitions="Auto,Auto,*">
+	<Grid RowDefinitions="Auto,Auto,*,240">
 
 		<Button Content="Update" HorizontalAlignment="Stretch"></Button>
 
 		<TextBox Grid.Row="1" Text="Search"></TextBox>
 
 		<ListBox Grid.Row="2"
-				 Items="{Binding Cities}">
+				 Items="{Binding Cities}"
+				 SelectedItem="{Binding SelectedCity}">
 			<ListBox.ItemTemplate>
-				<DataTemplate DataType="model:City">
+				<DataTemplate DataType="vm:CityViewModel">
 					<TextBlock Text="{Binding Name}"/>
 				</DataTemplate>
 			</ListBox.ItemTemplate>
 		</ListBox>
+
+		<views:CityView x:Name="CityInfoView" 
+						Grid.Row="3">
+			
+		</views:CityView>
 		
 	</Grid>
 	

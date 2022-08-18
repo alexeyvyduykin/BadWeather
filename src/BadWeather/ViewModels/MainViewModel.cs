@@ -1,6 +1,6 @@
 ﻿using BadWeather.Controllers;
-using BadWeather.Models;
 using BadWeather.Services.Cities;
+using BadWeather.Services.OpenWeather;
 using DynamicData;
 using InteractiveGeometry;
 using InteractiveGeometry.UI;
@@ -16,12 +16,13 @@ namespace BadWeather.ViewModels
 {
     public class MainViewModel : ReactiveObject
     {
-        private readonly SourceList<City> _cities = new();
-        private readonly ReadOnlyObservableCollection<City> _items;
+        private readonly SourceList<CityViewModel> _cities = new();
+        private readonly ReadOnlyObservableCollection<CityViewModel> _items;
         private readonly ObservableAsPropertyHelper<bool> _isLoading;
         private readonly IReadonlyDependencyResolver _dependencyResolver;
         private readonly Map _map;
         private readonly CitiesDataService _citiesDataService;
+        private readonly CityProvider _provider;
 
         public MainViewModel(IReadonlyDependencyResolver dependencyResolver)
         {
@@ -29,6 +30,9 @@ namespace BadWeather.ViewModels
 
             _map = (Map)dependencyResolver.GetExistingService<IMap>();
             _citiesDataService = dependencyResolver.GetExistingService<CitiesDataService>();
+            var openWeatherService = dependencyResolver.GetExistingService<OpenWeatherService>();
+
+            _provider = new CityProvider(_citiesDataService, openWeatherService);
 
             Tip = new DrawingTip();
 
@@ -76,7 +80,7 @@ namespace BadWeather.ViewModels
 
         private async Task LoadingImpl()
         {
-            var list = await _citiesDataService.GetCitiesAsync();
+            var list = await _provider.GetCitiesAsync();
 
             _cities.Edit(innerList =>
             {
@@ -85,7 +89,10 @@ namespace BadWeather.ViewModels
             });
         }
 
-        public ReadOnlyObservableCollection<City> Cities => _items;
+        public ReadOnlyObservableCollection<CityViewModel> Cities => _items;
+
+        [Reactive]
+        public CityViewModel? SelectedCity { get; set; }
 
         [Reactive]
         public DrawingTip Tip { get; set; }

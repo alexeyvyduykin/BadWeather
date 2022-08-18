@@ -22,7 +22,7 @@
 		</Style>
 	</UserControl.Styles>
 
-	<Grid ColumnDefinitions="*,240">
+	<Grid ColumnDefinitions="*,280">
 
 		<local:UserMapControl x:Name="MapControl"
 							  MapSource="{Binding Map}"
