@@ -3,6 +3,7 @@ using Mapsui.Extensions;
 using Mapsui.Layers;
 using Mapsui.Styles;
 using Mapsui.Styles.Thematics;
+using System;
 
 namespace BadWeather.Styles
 {
@@ -110,40 +111,53 @@ namespace BadWeather.Styles
             {
                 var population = f.GetValue<int?>("Population");
                 var temperature = f.GetValue<int?>("Temperature");
+                var icon = f.GetValue<string>("Icon");
                 var maxVisible = GetMaxVisible(population ?? int.MaxValue);
 
+                var text = temperature?.ToString("+0;-#");
+
                 return new LabelStyle
-                {
-                    Text = $".    {temperature?.ToString("+0;-#")}",
+                {               
+                    Text = $"{text}",                    
                     Font = new Font { Size = 16, Bold = false, Italic = false, },
-                    BackColor = new Brush(Color.Black),
-                    ForeColor = Color.White,
-                    CornerRounding = 10,
+                    BackColor = new Brush(Color.FromArgb(1, 1, 1, 1)),
+                    //BorderColor = Color.FromArgb(255, 1, 1, 1),
+                    //BorderThickness = 2,
+                    ForeColor = Color.Black,
+                    //Halo = new Pen(Color.Black, 1),
+                    //CornerRounding = 2,
                     Offset = new Offset(0, -15),
-                    WordWrap = LabelStyle.LineBreakMode.WordWrap,
+                    HorizontalAlignment = LabelStyle.HorizontalAlignmentEnum.Left,
+                    //WordWrap = LabelStyle.LineBreakMode.WordWrap,
                     MaxVisible = maxVisible,
                 };
-            });
+            });           
+        }
 
-            var stl3 = new ThemeStyle(f =>
+        public static IStyle CreateIconLabelStyle()
+        {
+            return new ThemeStyle(f =>
             {
-                var population = f.GetValue<int?>("Population");
-                var name = f.GetValue<string>("Name");
+                var population = f.GetValue<int?>("Population");                
+                var icon = f.GetValue<string>("Icon");
                 var maxVisible = GetMaxVisible(population ?? int.MaxValue);
 
-                return new LabelStyle
+                var bitmapId = typeof(MapFactory).LoadBitmapId($"EmbeddedResources.{icon}@2x.png");
+                var bitmapHeight = 100; // To set the offset correct we need to know the bitmap height
+
+                return new SymbolStyle
                 {
-                    Text = $"{name}",
-                    Font = new Font { Size = 18, Bold = false, Italic = false, },
-                    BackColor = new Brush(Color.Transparent),
-                    ForeColor = Color.Black,
-                    CornerRounding = 0,
-                    Offset = new Offset(0, +12),
-                    WordWrap = LabelStyle.LineBreakMode.WordWrap,
+                    BitmapId = bitmapId,
+                    SymbolScale = 0.30,
+                    SymbolOffset = new Offset(-60, 55),
+                    Line = new Pen(Color.Black, 2),
+                    Outline = new Pen(Color.Black, 2),
+                    // SymbolOffset = new Offset(0, bitmapHeight * 0.5),
                     MaxVisible = maxVisible,
-                };
+                };                
             });
         }
+
 
         public static IStyle CreateBottomLabelStyle()
         {
@@ -160,11 +174,12 @@ namespace BadWeather.Styles
                     Font = (isSelected == false)
                     ? new Font { Size = 18, Bold = false, Italic = false, }
                     : new Font { Size = 20, Bold = true, Italic = false, },
-                    BackColor = new Brush(Color.Transparent),
+                    BackColor = new Brush(Color.FromArgb(1, 1, 1, 1)),         
                     ForeColor = Color.Black,
                     CornerRounding = 0,
                     Offset = new Offset(0, +12),
-                    WordWrap = LabelStyle.LineBreakMode.WordWrap,
+                    
+                    //WordWrap = LabelStyle.LineBreakMode.WordWrap,
                     MaxVisible = maxVisible,
                 };
             });

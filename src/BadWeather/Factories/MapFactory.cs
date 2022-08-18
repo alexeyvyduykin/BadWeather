@@ -185,11 +185,16 @@ namespace BadWeather
 
         public ILayer CreateLayer2(ILayer layer)
         {
+            var col = new StyleCollection();
+
+            col.Add(LayerStyles.CreateTopLabelStyle());
+            col.Add(LayerStyles.CreateIconLabelStyle());
+
             return new VertexOnlyLayer(layer)
             {
                 Name = "Points with labels",
                 //Style = null,
-                Style = LayerStyles.CreateTopLabelStyle(),
+                Style = col,// LayerStyles.CreateTopLabelStyle(),
                 IsMapInfoLayer = true,
             };
         }
@@ -200,6 +205,8 @@ namespace BadWeather
                 Name = "Points with labels",
                 //Style = null,
                 Style = LayerStyles.CreateBottomLabelStyle(),
+            //    Opacity = 0.1f,
+                
                 IsMapInfoLayer = true,
             };
         }
@@ -216,10 +223,11 @@ namespace BadWeather
             feature["Name"] = city.Name;
             feature["Population"] = population;
             feature["Temperature"] = (int)Math.Round(temp);
+            feature["Icon"] = icon;
 
             //feature.Styles.AddRange(LayerStyles.CreateLayerStyle(city, population, temp, icon));
 
-            //     feature.Styles.AddRange(LayerStyles.CreateLayerStyle(city, population, temp, icon));
+            //feature.Styles.AddRange(LayerStyles.CreateLayerStyle(city, population, temp, icon));
 
             return feature;
         }
