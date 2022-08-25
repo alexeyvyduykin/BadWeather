@@ -1,10 +1,9 @@
-﻿using BadWeather.Controllers;
-using BadWeather.Services.Cities;
+﻿using BadWeather.Services.Cities;
 using BadWeather.Services.OpenWeather;
 using DynamicData;
-using InteractiveGeometry;
-using InteractiveGeometry.UI;
 using Mapsui;
+using Mapsui.Interactivity;
+using Mapsui.Interactivity.UI;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using Splat;
@@ -34,9 +33,7 @@ namespace BadWeather.ViewModels
 
             _provider = new CityProvider(_citiesDataService, openWeatherService);
 
-            Tip = new DrawingTip();
-
-            Tip.Creating("Area 4354.4545");
+            Tip = new FeatureTip();
 
             _cities
                 .Connect()
@@ -53,9 +50,9 @@ namespace BadWeather.ViewModels
 
             Loading.Execute().Subscribe();
 
-            var selector = (ISelector)new BaseSelector();
+            var selector = new BaseSelector();
 
-            selector.Selecting += (s, e) =>
+            selector.Select += (s, e) =>
             {
                 if (s is IFeature feature)
                 {
@@ -63,7 +60,7 @@ namespace BadWeather.ViewModels
                 }
             };
 
-            selector.Unselecting += (s, e) =>
+            selector.Unselect += (s, e) =>
             {
                 if (s is IFeature feature)
                 {
@@ -71,7 +68,22 @@ namespace BadWeather.ViewModels
                 }
             };
 
-            ActualController = new CustomController(selector);
+            selector.HoveringBegin += (s, e) =>
+            {
+                if (s is IFeature feature)
+                {
+                    Tip.Update(feature);
+                }
+            };
+
+            selector.HoveringEnd += (s, e) =>
+            {
+                Tip.Update(null);
+            };
+
+            Behavior = new InteractiveBehavior(selector);
+
+            ActualController = new SelectingController();
         }
 
         public ReactiveCommand<Unit, Unit> Loading { get; }
@@ -95,7 +107,7 @@ namespace BadWeather.ViewModels
         public CityViewModel? SelectedCity { get; set; }
 
         [Reactive]
-        public DrawingTip Tip { get; set; }
+        public FeatureTip Tip { get; set; }
 
         [Reactive]
         public string? FeatureInfo { get; set; }
@@ -103,5 +115,7 @@ namespace BadWeather.ViewModels
         public Map Map => _map;
 
         public IController ActualController { get; set; }
+
+        public IInteractiveBehavior Behavior { get; set; }
     }
 }

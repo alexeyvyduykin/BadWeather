@@ -13,14 +13,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BadWeather.Avalonia.NetCore
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BadWeather.Avalonia.Web", "src\BadWeather.Avalonia\BadWeather.Avalonia.Web\BadWeather.Avalonia.Web.csproj", "{7E74CFC9-6433-412B-9A28-6DDD80D37FF6}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{C5D6BC71-344B-4AF3-8398-5771ACE0AC5D}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InteractiveGeometry", "samples\InteractiveGeometry\InteractiveGeometry.csproj", "{392B6593-2AB3-4ED3-8D2D-626F89981DCF}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InteractiveGeometry.UI", "samples\InteractiveGeometry.UI\InteractiveGeometry.UI.csproj", "{C4338D95-62EF-424F-A95A-C088F8823138}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InteractiveGeometry.UI.Avalonia", "samples\InteractiveGeometry.UI.Avalonia\InteractiveGeometry.UI.Avalonia.csproj", "{85E8B548-DDEC-41A4-AD46-3200A424D598}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,18 +35,6 @@ Global
 		{7E74CFC9-6433-412B-9A28-6DDD80D37FF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7E74CFC9-6433-412B-9A28-6DDD80D37FF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7E74CFC9-6433-412B-9A28-6DDD80D37FF6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{392B6593-2AB3-4ED3-8D2D-626F89981DCF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{392B6593-2AB3-4ED3-8D2D-626F89981DCF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{392B6593-2AB3-4ED3-8D2D-626F89981DCF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{392B6593-2AB3-4ED3-8D2D-626F89981DCF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C4338D95-62EF-424F-A95A-C088F8823138}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C4338D95-62EF-424F-A95A-C088F8823138}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C4338D95-62EF-424F-A95A-C088F8823138}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C4338D95-62EF-424F-A95A-C088F8823138}.Release|Any CPU.Build.0 = Release|Any CPU
-		{85E8B548-DDEC-41A4-AD46-3200A424D598}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{85E8B548-DDEC-41A4-AD46-3200A424D598}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{85E8B548-DDEC-41A4-AD46-3200A424D598}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{85E8B548-DDEC-41A4-AD46-3200A424D598}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -64,9 +44,6 @@ Global
 		{82EC4C77-48C5-4268-81CA-1DD5D99AFAAA} = {B5118C00-BB9D-42C9-84E9-A013E36E2D1D}
 		{FE3BE908-A0BC-404F-95DB-3921612E954C} = {B5118C00-BB9D-42C9-84E9-A013E36E2D1D}
 		{7E74CFC9-6433-412B-9A28-6DDD80D37FF6} = {B5118C00-BB9D-42C9-84E9-A013E36E2D1D}
-		{392B6593-2AB3-4ED3-8D2D-626F89981DCF} = {C5D6BC71-344B-4AF3-8398-5771ACE0AC5D}
-		{C4338D95-62EF-424F-A95A-C088F8823138} = {C5D6BC71-344B-4AF3-8398-5771ACE0AC5D}
-		{85E8B548-DDEC-41A4-AD46-3200A424D598} = {C5D6BC71-344B-4AF3-8398-5771ACE0AC5D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {892E1C86-CDCE-462F-9176-D6AADC945FEB}

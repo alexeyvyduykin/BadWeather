@@ -26,12 +26,13 @@ namespace BadWeather.Avalonia.Views
 
         private static object ConvertToTemperature(double value)
         {
-            return $"{(int)Math.Round(value)} °C";            
+            var res = ((int)Math.Round(value)).ToString("+#;-#;0");
+            return $"{res} °C";
         }
 
         private static object ConvertToPressure(double value)
         {
-            return $"{(int)Math.Round(value /1.333)} mmHg";       
+            return $"{(int)Math.Round(value / 1.333)} mmHg";
         }
 
         private static object Convert(string icon)
@@ -42,10 +43,10 @@ namespace BadWeather.Avalonia.Views
 
             //return $"resm:BadWeather.EmbeddedResources.04d@2x.png?assembly=BadWeather";
 
-           // icon = "04d";
+            // icon = "04d";
 
             var uri = new Uri($"resm:BadWeather.EmbeddedResources.{icon}@2x.png?assembly=BadWeather");
-      
+
             //var uri = new Uri($"avares://BadWeather.EmbeddedResources.{icon}.png;assembly=BadWeather");
             var assets = AvaloniaLocator.Current.GetService<IAssetLoader>();
             var asset = assets?.Open(uri);

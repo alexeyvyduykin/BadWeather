@@ -2,7 +2,7 @@
 using Avalonia.Input;
 using BadWeather.Avalonia.Views;
 using BadWeather.ViewModels;
-using InteractiveGeometry.UI.Avalonia;
+using Mapsui.Interactivity.UI.Avalonia;
 
 namespace BadWeather.Avalonia
 {
@@ -41,11 +41,6 @@ namespace BadWeather.Avalonia
 
                 _tip.X = screenPosition.X + 20;
                 _tip.Y = screenPosition.Y;
-
-                if (_tip.IsVisible == false)
-                {
-                    _tip.IsVisible = true;
-                }
             }
         }
     }

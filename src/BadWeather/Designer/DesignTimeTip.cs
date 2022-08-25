@@ -1,14 +1,19 @@
 ﻿using BadWeather.ViewModels;
+using Mapsui.Layers;
 
 namespace BadWeather.Designer
 {
-    public class DesignTimeTip : DrawingTip
+    public class DesignFeatureTip : FeatureTip
     {
-        public DesignTimeTip() : base()
+        public DesignFeatureTip() : base()
         {
-            HoverCreating(34545.432);
+            var feature = new PointFeature(0, 0);
 
-            InvalidateVisual();
+            feature["Name"] = "London";
+            feature["Temperature"] = 17;
+            feature["Icon"] = "02d";
+
+            Update(feature);
         }
     }
 }
