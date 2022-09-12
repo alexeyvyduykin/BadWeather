@@ -1,9 +1,7 @@
 ﻿using BadWeather.Services.OpenWeather;
-using Mapsui.Extensions;
 using Mapsui.Layers;
 using Mapsui.Styles;
 using Mapsui.Styles.Thematics;
-using System;
 
 namespace BadWeather.Styles
 {
@@ -117,8 +115,8 @@ namespace BadWeather.Styles
                 var text = temperature?.ToString("+0;-#");
 
                 return new LabelStyle
-                {               
-                    Text = $"{text}",                    
+                {
+                    Text = $"{text}",
                     Font = new Font { Size = 16, Bold = false, Italic = false, },
                     BackColor = new Brush(Color.FromArgb(1, 1, 1, 1)),
                     //BorderColor = Color.FromArgb(255, 1, 1, 1),
@@ -131,33 +129,8 @@ namespace BadWeather.Styles
                     //WordWrap = LabelStyle.LineBreakMode.WordWrap,
                     MaxVisible = maxVisible,
                 };
-            });           
-        }
-
-        public static IStyle CreateIconLabelStyle()
-        {
-            return new ThemeStyle(f =>
-            {
-                var population = f.GetValue<int?>("Population");                
-                var icon = f.GetValue<string>("Icon");
-                var maxVisible = GetMaxVisible(population ?? int.MaxValue);
-
-                var bitmapId = typeof(MapFactory).LoadBitmapId($"EmbeddedResources.{icon}@2x.png");
-                var bitmapHeight = 100; // To set the offset correct we need to know the bitmap height
-
-                return new SymbolStyle
-                {
-                    BitmapId = bitmapId,
-                    SymbolScale = 0.30,
-                    SymbolOffset = new Offset(-60, 55),
-                    Line = new Pen(Color.Black, 2),
-                    Outline = new Pen(Color.Black, 2),
-                    // SymbolOffset = new Offset(0, bitmapHeight * 0.5),
-                    MaxVisible = maxVisible,
-                };                
             });
         }
-
 
         public static IStyle CreateBottomLabelStyle()
         {
@@ -174,11 +147,11 @@ namespace BadWeather.Styles
                     Font = (isSelected == false)
                     ? new Font { Size = 18, Bold = false, Italic = false, }
                     : new Font { Size = 20, Bold = true, Italic = false, },
-                    BackColor = new Brush(Color.FromArgb(1, 1, 1, 1)),         
+                    BackColor = new Brush(Color.FromArgb(1, 1, 1, 1)),
                     ForeColor = Color.Black,
                     CornerRounding = 0,
                     Offset = new Offset(0, +12),
-                    
+
                     //WordWrap = LabelStyle.LineBreakMode.WordWrap,
                     MaxVisible = maxVisible,
                 };
@@ -296,64 +269,5 @@ namespace BadWeather.Styles
                 MaxVisible = GetMaxVisible(population),
             };
         }
-
-        private static IStyle CreateBitmapStyle(OpenWeatherModel city, int population, string icon)
-        {
-            // For this sample we get the bitmap from an embedded resouce
-            // but you could get the data stream from the web or anywhere
-            // else.
-
-            var bitmapId = typeof(MapFactory).LoadBitmapId($"EmbeddedResources.{icon}@2x.png");
-            var bitmapHeight = 176; // To set the offset correct we need to know the bitmap height
-            return new SymbolStyle
-            {
-                BitmapId = bitmapId,
-                SymbolScale = 0.30,
-                SymbolOffset = new Offset(-45, 45),
-                // SymbolOffset = new Offset(0, bitmapHeight * 0.5),
-                MaxVisible = GetMaxVisible(population),
-            };
-        }
-
-        //public static IStyle CreateColoredLabelStyle()
-        //{
-        //    return new LabelStyle
-        //    {
-        //        Text = "Colors",
-        //        BackColor = new Brush(Color.Blue),
-        //        ForeColor = Color.White
-        //    };
-        //}
-
-        //public static SymbolStyle CreateBitmapStyle()
-        //{
-        //    // For this sample we get the bitmap from an embedded resouce
-        //    // but you could get the data stream from the web or anywhere
-        //    // else.
-        //    var bitmapId = typeof(MapFactory).LoadBitmapId(@"EmbeddedResources.home.png");
-        //    var bitmapHeight = 176; // To set the offset correct we need to know the bitmap height
-        //    return new SymbolStyle
-        //    {
-        //        BitmapId = bitmapId,
-        //        SymbolScale = 0.20,
-        //        SymbolOffset = new Offset(0, bitmapHeight * 0.5)
-        //    };
-        //}
-
-        //public static SymbolStyle CreateBitmapMarkerStyle(OpenWeatherModel city, int population)
-        //{
-        //    // For this sample we get the bitmap from an embedded resouce
-        //    // but you could get the data stream from the web or anywhere
-        //    // else.
-        //    var bitmapId = typeof(MapFactory).LoadBitmapId(@"EmbeddedResources.marker.png");
-        //    var bitmapHeight = 64; // To set the offset correct we need to know the bitmap height
-        //    return new SymbolStyle
-        //    {
-        //        BitmapId = bitmapId,
-        //        SymbolScale = 0.85,
-        //        SymbolOffset = new Offset(0, bitmapHeight * 0.5),
-        //        MaxVisible = GetMaxVisible(population),
-        //    };
-        //}
     }
 }

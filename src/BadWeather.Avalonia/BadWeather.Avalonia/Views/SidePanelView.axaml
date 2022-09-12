@@ -12,7 +12,7 @@
 	<Design.DataContext>
 		<vmd:DesignTimeMainViewModel/>
 	</Design.DataContext>
-	
+
 	<Grid RowDefinitions="Auto,Auto,*,240">
 
 		<Button Content="Update" HorizontalAlignment="Stretch"></Button>
@@ -29,12 +29,12 @@
 			</ListBox.ItemTemplate>
 		</ListBox>
 
-		<views:CityView x:Name="CityInfoView" 
-						Grid.Row="3">
-			
-		</views:CityView>
-		
+		<ContentControl Grid.Row="3"
+						IsVisible="{Binding SelectedCity, Converter={x:Static ObjectConverters.IsNotNull}}">
+			<views:CityView DataContext="{Binding SelectedCity}"/>
+		</ContentControl>
+
 	</Grid>
-	
-	
+
+
 </UserControl>

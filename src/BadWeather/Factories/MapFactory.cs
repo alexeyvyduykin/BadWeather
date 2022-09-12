@@ -170,7 +170,7 @@ namespace BadWeather
             var col = new StyleCollection();
 
             col.Add(LayerStyles.CreateTopLabelStyle());
-            col.Add(LayerStyles.CreateIconLabelStyle());
+            //col.Add(LayerStyles.CreateIconLabelStyle());
 
             return new VertexOnlyLayer(layer)
             {
@@ -207,53 +207,7 @@ namespace BadWeather
             feature["Temperature"] = (int)Math.Round(temp);
             feature["Icon"] = icon;
 
-            //feature.Styles.AddRange(LayerStyles.CreateLayerStyle(city, population, temp, icon));
-
-            //feature.Styles.AddRange(LayerStyles.CreateLayerStyle(city, population, temp, icon));
-
             return feature;
         }
-
-        //private static IFeature CreateFeatureWithColors()
-        //{
-        //    var featureWithColors = new PointFeature(new MPoint(0, -7000000));
-        //    featureWithColors.Styles.Add(LayerStyles.CreateColoredLabelStyle());
-        //    return featureWithColors;
-        //}
-
-        //private static IFeature CreatePolygonWithLabel()
-        //{
-        //    var polygon = new GeometryFeature
-        //    {
-        //        Geometry = new WKTReader().Read(
-        //            "POLYGON((-1000000 -10000000, 1000000 -10000000, 1000000 -8000000, -1000000 -8000000, -1000000 -10000000))")
-        //    };
-        //    polygon.Styles.Add(new LabelStyle
-        //    {
-        //        Text = "Polygon",
-        //        BackColor = new Brush(Color.Gray),
-        //        HorizontalAlignment = LabelStyle.HorizontalAlignmentEnum.Center
-        //    });
-        //    return polygon;
-        //}
-
-        //private static IFeature CreateFeatureWithWordWrapLeft()
-        //{
-        //    var featureWithColors = new PointFeature(new MPoint(-8000000, 6000000));
-        //    featureWithColors.Styles.Add(new LabelStyle
-        //    {
-        //        Text = "Long line break mode test",
-        //        Font = new Font { Size = 16, Bold = true, Italic = false, },
-        //        BackColor = new Brush(Color.Gray),
-        //        ForeColor = Color.White,
-        //        Halo = new Pen(Color.Black, 2),
-        //        MaxWidth = 10,
-        //        LineHeight = 1.2,
-        //        WordWrap = LabelStyle.LineBreakMode.WordWrap,
-        //        HorizontalAlignment = LabelStyle.HorizontalAlignmentEnum.Left,
-        //        VerticalAlignment = LabelStyle.VerticalAlignmentEnum.Top,
-        //    });
-        //    return featureWithColors;
-        //}
     }
 }

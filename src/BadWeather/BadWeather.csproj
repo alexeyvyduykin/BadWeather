@@ -5,52 +5,6 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 	</PropertyGroup>
-	
-	<ItemGroup>
-	  <None Remove="EmbeddedResources\01d%402x.png" />
-	  <None Remove="EmbeddedResources\01n%402x.png" />
-	  <None Remove="EmbeddedResources\02d%402x.png" />
-	  <None Remove="EmbeddedResources\02n%402x.png" />
-	  <None Remove="EmbeddedResources\03d%402x.png" />
-	  <None Remove="EmbeddedResources\03n%402x.png" />
-	  <None Remove="EmbeddedResources\04d%402x.png" />
-	  <None Remove="EmbeddedResources\04n%402x.png" />
-	  <None Remove="EmbeddedResources\09d%402x.png" />
-	  <None Remove="EmbeddedResources\09n%402x.png" />
-	  <None Remove="EmbeddedResources\10d%402x.png" />
-	  <None Remove="EmbeddedResources\10n%402x.png" />
-	  <None Remove="EmbeddedResources\11d%402x.png" />
-	  <None Remove="EmbeddedResources\11n%402x.png" />
-	  <None Remove="EmbeddedResources\13d%402x.png" />
-	  <None Remove="EmbeddedResources\13n%402x.png" />
-	  <None Remove="EmbeddedResources\50d%402x.png" />
-	  <None Remove="EmbeddedResources\50n%402x.png" />
-	  <None Remove="EmbeddedResources\home.png" />
-	  <None Remove="EmbeddedResources\marker.png" />
-	</ItemGroup>
-	
-	<ItemGroup>
-	  <EmbeddedResource Include="EmbeddedResources\01d@2x.png" />
-	  <EmbeddedResource Include="EmbeddedResources\01n@2x.png" />
-	  <EmbeddedResource Include="EmbeddedResources\02d@2x.png" />
-	  <EmbeddedResource Include="EmbeddedResources\02n@2x.png" />
-	  <EmbeddedResource Include="EmbeddedResources\03d@2x.png" />
-	  <EmbeddedResource Include="EmbeddedResources\03n@2x.png" />
-	  <EmbeddedResource Include="EmbeddedResources\04d@2x.png" />
-	  <EmbeddedResource Include="EmbeddedResources\04n@2x.png" />
-	  <EmbeddedResource Include="EmbeddedResources\09d@2x.png" />
-	  <EmbeddedResource Include="EmbeddedResources\09n@2x.png" />
-	  <EmbeddedResource Include="EmbeddedResources\10d@2x.png" />
-	  <EmbeddedResource Include="EmbeddedResources\10n@2x.png" />
-	  <EmbeddedResource Include="EmbeddedResources\11d@2x.png" />
-	  <EmbeddedResource Include="EmbeddedResources\11n@2x.png" />
-	  <EmbeddedResource Include="EmbeddedResources\13d@2x.png" />
-	  <EmbeddedResource Include="EmbeddedResources\13n@2x.png" />
-	  <EmbeddedResource Include="EmbeddedResources\50d@2x.png" />
-	  <EmbeddedResource Include="EmbeddedResources\50n@2x.png" />
-	  <EmbeddedResource Include="EmbeddedResources\home.png" />
-	  <EmbeddedResource Include="EmbeddedResources\marker.png" />
-	</ItemGroup>
 
 	<ItemGroup>	
 		<PackageReference Include="Mapsui" Version="4.0.0-beta.5" />	

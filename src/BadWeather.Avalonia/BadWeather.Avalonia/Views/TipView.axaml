@@ -2,7 +2,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:styles="clr-namespace:Material.Styles;assembly=Material.Styles"
+             xmlns:conv="clr-namespace:BadWeather.Avalonia.Converters"
+             xmlns:wi="using:WeatherIcons.Avalonia"
+			 xmlns:styles="clr-namespace:Material.Styles;assembly=Material.Styles"
 			 xmlns:vmd="clr-namespace:BadWeather.Designer;assembly=BadWeather"
              mc:Ignorable="d"
              x:Class="BadWeather.Avalonia.Views.TipView">
@@ -13,6 +15,7 @@
 
 	<UserControl.Resources>
 		<SolidColorBrush x:Key="TipBrush" Color="Black" Opacity="0.65"/>
+		<conv:WeatherKeyConverter x:Key="weatherKeyConv"/>
 	</UserControl.Resources>
 
 	<UserControl.Styles>
@@ -29,13 +32,9 @@
 	<Border>
 		<Grid ColumnDefinitions="Auto,*,*">
 
-			<Viewbox Width="30" Height="30">
-				<Border Background="{StaticResource ThemeAccentBrush}"
-						Padding="0"
-						CornerRadius="30">
-					<Image x:Name="ImageIcon"/>
-				</Border>
-			</Viewbox>
+			<wi:ThemedWeatherIcon Key="{Binding Icon, Converter={StaticResource weatherKeyConv}}"
+								  Width="30"
+							      Height="30"/>
 
 			<TextBlock Grid.Column="1"
 					   Padding="8,0,0,0"

@@ -5,11 +5,6 @@ namespace BadWeather.ViewModels
 {
     public class FeatureTip : Tip
     {
-        public FeatureTip()
-        {
-
-        }
-
         public void Update(IFeature? feature = null)
         {
             IsVisible = feature != null;
@@ -28,7 +23,7 @@ namespace BadWeather.ViewModels
 
             Name = feature?.GetValue<string>("Name");
             Temperature = temp != null ? $"{tempStr} °C" : string.Empty;
-            Icon = icon != null ? new Uri($"resm:BadWeather.EmbeddedResources.{icon}@2x.png?assembly=BadWeather") : null;
+            Icon = icon;
         }
 
         [Reactive]
@@ -38,6 +33,6 @@ namespace BadWeather.ViewModels
         public string? Temperature { get; set; }
 
         [Reactive]
-        public Uri? Icon { get; set; }
+        public string? Icon { get; set; }
     }
 }
