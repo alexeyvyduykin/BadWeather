@@ -1,5 +1,4 @@
-﻿using BadWeather.Layers;
-using BadWeather.Services.Cities;
+﻿using BadWeather.Services.Cities;
 using BadWeather.Services.OpenWeather;
 using BadWeather.Styles;
 using BruTile;
@@ -61,14 +60,10 @@ namespace BadWeather
             };
 
             var layer = CreateLayer();
-            var layer2 = CreateLayer2(layer);
-            var layer3 = CreateLayer3(layer);
 
             map.Layers.Add(CreateWorldMapLayer());
-            //map.Layers.Add(CreateBingAerialMapLayer());                        
+            //map.Layers.Add(CreateBingAerialMapLayer());                                 
             map.Layers.Add(layer);
-            map.Layers.Add(layer2);
-            map.Layers.Add(layer3);
 
             map.Home = n => n.NavigateTo(rect, Mapsui.Utilities.ScaleMethod.Fill);
 
@@ -112,28 +107,6 @@ namespace BadWeather
             };
         }
 
-        //private static MemoryLayer CreatePointLayer()
-        //{
-        //    return new MemoryLayer
-        //    {
-        //        Name = "Points",
-        //        IsMapInfoLayer = true,
-        //        Features = GetCitiesFromEmbeddedResource(),
-        //        Style = LayerStyles.CreateBitmapStyle()
-        //    };
-        //}
-
-        //private static IEnumerable<IFeature> GetCitiesFromEmbeddedResource()
-        //{
-        //    return _cities.Select(c =>
-        //    {
-        //        var feature = new PointFeature(SphericalMercator.FromLonLat(c.Lon, c.Lat).ToMPoint());
-        //        feature["name"] = c.Name;
-        //        feature["country"] = c.Country;
-        //        return feature;
-        //    });
-        //}
-
         public ILayer CreateLayer()
         {
             var citiesDataService = _dependencyResolver.GetExistingService<CitiesDataService>();
@@ -142,11 +115,16 @@ namespace BadWeather
 
             var features = cities.Select(city =>
             {
-                var name = city?.Name ?? default;
-                var code = city?.Code?.ToUpper() ?? default;
-                var population = city?.Population ?? default;
+                var name = city.Name ?? throw new Exception();
+                var code = city.Code?.ToUpper() ?? throw new Exception();
+                var population = city.Population ?? throw new Exception();
 
                 var model = Task.Run(async () => await openWeatherService.GetModelAsync(name, code)).Result;
+
+                if (model == null)
+                {
+                    throw new Exception();
+                }
 
                 var feature = CreateFeature(model, population);
 
@@ -157,48 +135,24 @@ namespace BadWeather
             {
                 Name = "Points with labels",
                 Features = features.ToList(),
-                //Style = null,
-                Style = LayerStyles.CreateLabel_Style(),// null,
+                //Style = LayerStyles.CreatePointStyle(),
                 IsMapInfoLayer = true,
             };
+
+            var coll = new StyleCollection();
+
+            coll.Add(LayerStyles.CreatePointStyle());
+            coll.Add(LayerStyles.CreateTemperatureLabel());
+            coll.Add(LayerStyles.CreateCityLabel());
+
+            layer.Style = coll;
 
             return layer;
         }
 
-        public ILayer CreateLayer2(ILayer layer)
-        {
-            var col = new StyleCollection();
-
-            col.Add(LayerStyles.CreateTopLabelStyle());
-            //col.Add(LayerStyles.CreateIconLabelStyle());
-
-            return new VertexOnlyLayer(layer)
-            {
-                Name = "Points with labels",
-                //Style = null,
-                Style = col,// LayerStyles.CreateTopLabelStyle(),
-                IsMapInfoLayer = true,
-            };
-        }
-
-        public ILayer CreateLayer3(ILayer layer)
-        {
-            return new VertexOnlyLayer(layer)
-            {
-                Name = "Points with labels",
-                //Style = null,
-                Style = LayerStyles.CreateBottomLabelStyle(),
-                //    Opacity = 0.1f,
-
-                IsMapInfoLayer = true,
-            };
-        }
-
         private static IFeature CreateFeature(OpenWeatherModel model, int population)
         {
-            var weather = model.Weathers?.First();
             var temp = model.Main?.GetTemperatureInCelsius() ?? default;
-            var icon = weather?.Icon ?? default;
 
             var point = SphericalMercator.FromLonLat(model.Coordinate.Lon, model.Coordinate.Lat).ToMPoint();
 
@@ -207,12 +161,9 @@ namespace BadWeather
             feature["Name"] = model.Name;
             feature["Population"] = population;
             feature["Temperature"] = (int)Math.Round(temp);
-            feature["Icon"] = icon;
-
             feature["Pressure"] = model.Main?.Pressure;
             feature["Humidity"] = model.Main?.Humidity;
             feature["Cloudiness"] = model.Clouds?.All;
-
             feature["Degree"] = model.Wind?.Degree;
             feature["Speed"] = model.Wind?.Speed;
 
