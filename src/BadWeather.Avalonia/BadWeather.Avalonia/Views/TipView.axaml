@@ -6,7 +6,9 @@
              xmlns:wi="using:WeatherIcons.Avalonia"
 			 xmlns:styles="clr-namespace:Material.Styles;assembly=Material.Styles"
 			 xmlns:vmd="clr-namespace:BadWeather.Designer;assembly=BadWeather"
-             mc:Ignorable="d"
+			 xmlns:vm="clr-namespace:BadWeather.ViewModels;assembly=BadWeather"
+			 mc:Ignorable="d"
+			 x:DataType="vm:FeatureTip"
              x:Class="BadWeather.Avalonia.Views.TipView">
 
 	<Design.DataContext>
@@ -21,30 +23,147 @@
 	<UserControl.Styles>
 		<Style Selector="Border">
 			<Setter Property="Background" Value="{StaticResource TipBrush}"/>
-			<Setter Property="Padding" Value="4" />
-			<Setter Property="CornerRadius" Value="3" />
+			<Setter Property="Padding" Value="8,4" />
+			<Setter Property="CornerRadius" Value="4" />
 		</Style>
 		<Style Selector="TextBlock">
 			<Setter Property="VerticalAlignment" Value="Center"/>
 		</Style>
+		<Style Selector="wi|WeatherIcon.humidityIcon">
+			<Setter Property="Key" Value="Humidity"/>
+			<Setter Property="Primary" Value="Aqua"/>
+			<Setter Property="Width" Value="30"/>
+			<Setter Property="Height" Value="30"/>
+		</Style>
+		<Style Selector="wi|WeatherIcon.barometerIcon">
+			<Setter Property="Key" Value="Barometer"/>
+			<Setter Property="Primary" Value="Brown"/>
+			<Setter Property="Secondary" Value="White"/>
+			<Setter Property="Tertiary" Value="Orange"/>
+			<Setter Property="Width" Value="30"/>
+			<Setter Property="Height" Value="30"/>
+		</Style>
+		<Style Selector="wi|WeatherIcon.cloudIcon">
+			<Setter Property="Key" Value="Cloud"/>
+			<Setter Property="Width" Value="30"/>
+			<Setter Property="Height" Value="30"/>
+		</Style>
+		<Style Selector="wi|WindDirectionIcon">
+			<Setter Property="Width" Value="30"/>
+			<Setter Property="Height" Value="30"/>
+			<Setter Property="Primary" Value="Orange"/>
+			<Setter Property="Secondary" Value="Green"/>
+		</Style>
+		<Style Selector="wi|BeaufortWindScaleIcon">
+			<Setter Property="Width" Value="30"/>
+			<Setter Property="Height" Value="30"/>
+			<Setter Property="Primary" Value="Green"/>
+			<Setter Property="Secondary" Value="Orange"/>
+		</Style>
 	</UserControl.Styles>
 
 	<Border>
-		<Grid ColumnDefinitions="Auto,*,*">
+		<Grid RowDefinitions="Auto, Auto">
+			<Grid ColumnDefinitions="Auto,*,*,*">
 
-			<wi:ThemedWeatherIcon Key="{Binding Icon, Converter={StaticResource weatherKeyConv}}"
-								  Width="30"
-							      Height="30"/>
+				<wi:ThemedWeatherIcon Key="{Binding Icon, Converter={StaticResource weatherKeyConv}}"
+									  Width="30"
+									  Height="30"/>
 
-			<TextBlock Grid.Column="1"
-					   Padding="8,0,0,0"
-					   Text="{Binding Name}"
-					   Classes="Subtitle1"/>
+				<TextBlock Grid.Column="1"
+						   Padding="8,0,0,0"
+						   Text="{Binding Name}"
+						   Classes="Subtitle1"/>
 
-			<TextBlock Grid.Column="2"
-					   Padding="4,0,0,0"
-					   Text="{Binding Temperature}"
-					   Classes="Headline6"/>
+				<TextBlock Grid.Column="2"
+						   Padding="4,0,0,0"
+						   Text="{Binding Temperature}"
+						   Classes="Headline6"/>
+
+				<TextBlock Grid.Column="3"
+						   Padding="4,0,0,0"
+						   Text="°C"
+						   Classes="Body1"/>
+			</Grid>
+
+			<Grid Grid.Row="1"
+				  IsVisible="{Binding IsExpanded}"
+				  RowDefinitions="Auto,Auto,Auto,Auto"
+				  ColumnDefinitions="Auto,*"
+				  HorizontalAlignment="Right">
+
+				<wi:WeatherIcon Grid.Row="0" Classes="humidityIcon"/>
+				<wi:WeatherIcon Grid.Row="1" Classes="barometerIcon"/>
+				<wi:WeatherIcon Grid.Row="2" Classes="cloudIcon"/>
+
+				<StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Left">
+					<wi:BeaufortWindScaleIcon  Speed="{Binding Speed}" Unit="MetrePerSecond"/>
+					<wi:WindDirectionIcon Angle="{Binding Degree}" />
+				</StackPanel>
+
+				<StackPanel Orientation="Horizontal"
+							Grid.Column="1"
+							HorizontalAlignment="Right">
+
+					<TextBlock Grid.Column="1"
+							   HorizontalAlignment="Right"
+							   Text="{Binding Humidity}"
+							   Classes="Headline6"/>
+					<TextBlock Grid.Column="2"
+							   Text="%"
+							   Margin="4,0,0,0"
+							   HorizontalAlignment="Right"
+							   Classes="Body2"/>
+				</StackPanel>
+
+				<StackPanel Orientation="Horizontal"
+							Grid.Row="1"
+							Grid.Column="1"
+							HorizontalAlignment="Right">
+
+					<TextBlock Grid.Column="1"
+							   Text="{Binding Pressure}"
+							   HorizontalAlignment="Right"
+							   Classes="Headline6"/>
+					<TextBlock Grid.Column="2"
+							   Text="mmHg"
+							   Margin="4,0,0,0"
+							   HorizontalAlignment="Right"
+							   Classes="Body2"/>
+				</StackPanel>
+
+				<StackPanel Orientation="Horizontal"
+							Grid.Row="2"
+							Grid.Column="1"
+							HorizontalAlignment="Right">
+
+					<TextBlock Grid.Column="1"
+							   HorizontalAlignment="Right"
+							   Text="{Binding Cloudiness}"
+							   Classes="Headline6"/>
+					<TextBlock Grid.Column="2"
+							   Text="%"
+							   Margin="4,0,0,0"
+							   HorizontalAlignment="Right"
+							   Classes="Body2"/>
+				</StackPanel>
+
+				<StackPanel Orientation="Horizontal"
+							Grid.Row="3"
+							Grid.Column="1"
+							HorizontalAlignment="Right">
+
+					<TextBlock Grid.Column="1"
+							   Text="{Binding Speed}"
+							   HorizontalAlignment="Right"
+							   Classes="Headline6"/>
+					<TextBlock Grid.Column="2"
+							   Text="m/s"
+							   Margin="4,0,0,0"
+							   HorizontalAlignment="Right"
+							   Classes="Body2"/>
+				</StackPanel>
+			</Grid>
 		</Grid>
 	</Border>
 

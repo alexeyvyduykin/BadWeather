@@ -7,7 +7,7 @@
 			 xmlns:conv="clr-namespace:BadWeather.Avalonia.Converters"
              xmlns:wi="using:WeatherIcons.Avalonia"
 			 mc:Ignorable="d"
-			 d:DesignWidth="220" d:DesignHeight="240"
+			 d:DesignWidth="220"
              x:Class="BadWeather.Avalonia.Views.CityView">
 
 	<Design.DataContext>
@@ -64,6 +64,29 @@
 						   HorizontalAlignment="Right"
 						   VerticalAlignment="Center"
 						   Text="{Binding Cloudiness, StringFormat={}{0} %}"
+						   Classes="Headline6"/>
+			</Grid>
+
+			<Grid ColumnDefinitions="Auto,*">
+				<StackPanel Orientation="Horizontal">
+					<wi:BeaufortWindScaleIcon
+						  Speed="{Binding Speed}"
+						  Unit="MetrePerSecond"
+						  Height="36"
+						  Width="36"
+						  Primary="Green"
+						  Secondary="Orange"/>
+					<wi:WindDirectionIcon Angle="{Binding Degree}"
+										  Height="36"
+										  Width="36"
+										  Primary="Orange"
+										  Secondary="Green"/>
+				</StackPanel>
+
+				<TextBlock Grid.Column="1"
+						   HorizontalAlignment="Right"
+						   VerticalAlignment="Center"
+						   Text="{Binding Speed, StringFormat={}{0} m/s}"
 						   Classes="Headline6"/>
 			</Grid>
 

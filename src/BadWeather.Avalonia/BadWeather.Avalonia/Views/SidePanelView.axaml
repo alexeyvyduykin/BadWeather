@@ -13,7 +13,7 @@
 		<vmd:DesignTimeMainViewModel/>
 	</Design.DataContext>
 
-	<Grid RowDefinitions="Auto,Auto,*,240">
+	<Grid RowDefinitions="Auto,Auto,*,Auto">
 
 		<Button Content="Update" HorizontalAlignment="Stretch"></Button>
 

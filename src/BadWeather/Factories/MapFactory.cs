@@ -180,6 +180,7 @@ namespace BadWeather
                 IsMapInfoLayer = true,
             };
         }
+
         public ILayer CreateLayer3(ILayer layer)
         {
             return new VertexOnlyLayer(layer)
@@ -192,20 +193,28 @@ namespace BadWeather
                 IsMapInfoLayer = true,
             };
         }
-        private static IFeature CreateFeature(OpenWeatherModel city, int population)
+
+        private static IFeature CreateFeature(OpenWeatherModel model, int population)
         {
-            var weather = city.Weathers?.First();
-            var temp = city.Main?.GetTemperatureInCelsius() ?? default;
+            var weather = model.Weathers?.First();
+            var temp = model.Main?.GetTemperatureInCelsius() ?? default;
             var icon = weather?.Icon ?? default;
 
-            var point = SphericalMercator.FromLonLat(city.Coordinate.Lon, city.Coordinate.Lat).ToMPoint();
+            var point = SphericalMercator.FromLonLat(model.Coordinate.Lon, model.Coordinate.Lat).ToMPoint();
 
             var feature = new PointFeature(point);
 
-            feature["Name"] = city.Name;
+            feature["Name"] = model.Name;
             feature["Population"] = population;
             feature["Temperature"] = (int)Math.Round(temp);
             feature["Icon"] = icon;
+
+            feature["Pressure"] = model.Main?.Pressure;
+            feature["Humidity"] = model.Main?.Humidity;
+            feature["Cloudiness"] = model.Clouds?.All;
+
+            feature["Degree"] = model.Wind?.Degree;
+            feature["Speed"] = model.Wind?.Speed;
 
             return feature;
         }

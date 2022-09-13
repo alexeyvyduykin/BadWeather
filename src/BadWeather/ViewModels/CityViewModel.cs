@@ -16,9 +16,9 @@ namespace BadWeather.ViewModels
             Humidity = model.Main.Humidity;
             Icon = model.Weathers!.First().Icon!;
             DataCalculation = model.DataTime;
-            WindSpeed = model.Wind!.Speed;
-            WindDegree = model.Wind!.Degree;
-            WindGust = model.Wind!.Gust;
+            Speed = model.Wind!.Speed;
+            Degree = model.Wind!.Degree;
+            Gust = model.Wind!.Gust;
             Cloudiness = model.Clouds!.All;
         }
 
@@ -42,11 +42,11 @@ namespace BadWeather.ViewModels
 
         public int DataCalculation { get; set; }
 
-        public double WindSpeed { get; set; }
+        public double Speed { get; set; }
 
-        public int WindDegree { get; set; }
+        public int Degree { get; set; }
 
-        public double WindGust { get; set; }
+        public double Gust { get; set; }
 
         public int Cloudiness { get; set; }
     }

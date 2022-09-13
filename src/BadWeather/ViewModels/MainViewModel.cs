@@ -57,6 +57,7 @@ namespace BadWeather.ViewModels
                 if (s is IFeature feature)
                 {
                     FeatureInfo = feature.ToFeatureInfo();
+                    Tip.Update(feature);
                 }
             };
 
@@ -65,6 +66,7 @@ namespace BadWeather.ViewModels
                 if (s is IFeature feature)
                 {
                     FeatureInfo = feature.ToFeatureInfo();
+                    Tip.Update(feature);
                 }
             };
 
