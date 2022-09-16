@@ -31,7 +31,7 @@ namespace BadWeather.Styles
             return maxVisible;
         }
 
-        public static IStyle CreateTemperatureLabel()
+        public static IStyle CreateTemperatureLabel(string type)
         {
             return new ThemeStyle(f =>
             {
@@ -46,7 +46,7 @@ namespace BadWeather.Styles
                     Text = $"{text}",
                     Font = new Font { Size = 16, Bold = false, Italic = false, },
                     BackColor = new Brush(Color.FromArgb(1, 1, 1, 1)),
-                    ForeColor = Color.Black,
+                    ForeColor = string.Equals(type, "world") ? Color.Black : Color.White,
                     Offset = new Offset(0, -15),
                     HorizontalAlignment = LabelStyle.HorizontalAlignmentEnum.Left,
                     MaxVisible = maxVisible,
@@ -54,7 +54,7 @@ namespace BadWeather.Styles
             });
         }
 
-        public static IStyle CreateCityLabel()
+        public static IStyle CreateCityLabel(string type)
         {
             return new ThemeStyle(f =>
             {
@@ -70,7 +70,7 @@ namespace BadWeather.Styles
                     ? new Font { Size = 18, Bold = false, Italic = false, }
                     : new Font { Size = 20, Bold = true, Italic = false, },
                     BackColor = new Brush(Color.FromArgb(1, 1, 1, 1)),
-                    ForeColor = Color.Black,
+                    ForeColor = string.Equals(type, "world") ? Color.Black : Color.White,
                     Offset = new Offset(0, +12),
                     MaxVisible = maxVisible,
                 };

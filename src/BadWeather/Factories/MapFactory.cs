@@ -60,7 +60,7 @@ namespace BadWeather
                 //Limiter = new ViewportLimiterWithoutLimits(),   
             };
 
-            var layer = CreateLayer();
+            var layer = CreateLayer(type);
 
             if (string.Equals(type, "world"))
             {
@@ -115,7 +115,7 @@ namespace BadWeather
             };
         }
 
-        public ILayer CreateLayer()
+        public ILayer CreateLayer(string type)
         {
             var dataService = _dependencyResolver.GetExistingService<DataService>();
             var openWeatherService = _dependencyResolver.GetExistingService<OpenWeatherService>();
@@ -127,8 +127,8 @@ namespace BadWeather
                 Style = new StyleCollection
                 {
                     LayerStyles.CreatePointStyle(),
-                    LayerStyles.CreateTemperatureLabel(),
-                    LayerStyles.CreateCityLabel()
+                    LayerStyles.CreateTemperatureLabel(type),
+                    LayerStyles.CreateCityLabel(type)
                 }
             };
 

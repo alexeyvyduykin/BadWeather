@@ -32,7 +32,8 @@
 							  VerticalAlignment="Stretch">
 
 			<Canvas Background="Transparent">
-				<views:TipView DataContext="{Binding $parent[UserControl].DataContext.Tip}"/>
+				<views:TipView DataContext="{Binding $parent[UserControl].DataContext.Tip}"
+							   Foreground="{DynamicResource ThemeForegroundBrush}"/>
 			</Canvas>
 
 		</local:UserMapControl>
@@ -48,7 +49,8 @@
 					   TextWrapping="Wrap"/>
 		</Border>
 
-		<views:SidePanelView Grid.Column="1"></views:SidePanelView>
+		<views:SidePanelView Grid.Column="1"
+							 Foreground="{DynamicResource ThemeForegroundBrush}"/>
 
 	</Grid>
 
