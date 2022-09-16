@@ -1,4 +1,5 @@
-﻿using BadWeather.Services.Cities;
+﻿using BadWeather.Models;
+using BadWeather.Services;
 using BadWeather.Services.OpenWeather;
 using BadWeather.ViewModels;
 
@@ -6,14 +7,14 @@ namespace BadWeather
 {
     public class CityProvider
     {
-        private CitiesDataService _citiesDataService;
+        private DataService _dataService;
         private OpenWeatherService _openWeatherService;
 
         private List<CityViewModel>? _cache;
 
-        public CityProvider(CitiesDataService citiesDataService, OpenWeatherService openWeatherService)
+        public CityProvider(DataService dataService, OpenWeatherService openWeatherService)
         {
-            _citiesDataService = citiesDataService;
+            _dataService = dataService;
             _openWeatherService = openWeatherService;
         }
 
@@ -23,9 +24,9 @@ namespace BadWeather
             {
                 _cache = new List<CityViewModel>();
 
-                var cities = await _citiesDataService.GetCitiesAsync();
+                var cities = await _dataService.GetDataAsync<City>("city");
 
-                foreach (var item in cities)
+                foreach (var item in cities.OrderBy(s => s.Name))
                 {
                     var model = await _openWeatherService.GetModelAsync(item.Name!, item.Code!);
 

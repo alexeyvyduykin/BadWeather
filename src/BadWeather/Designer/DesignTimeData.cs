@@ -1,4 +1,4 @@
-﻿using BadWeather.Services.Cities;
+﻿using BadWeather.Services;
 using BadWeather.Services.OpenWeather;
 using BadWeather.ViewModels;
 using Mapsui;
@@ -13,7 +13,7 @@ namespace BadWeather.Designer
         private MapFactory? _mapFactory;
         private ViewModelFactory? _viewModelFactory;
         private MainViewModel? _mainViewModel;
-        private CitiesDataService? _citiesDataService;
+        private DataService? _dataService;
         private OpenWeatherService? _openWeatherService;
 
         public object? GetService(Type? serviceType, string? contract = null)
@@ -34,9 +34,9 @@ namespace BadWeather.Designer
             {
                 return _mainViewModel ??= new MainViewModel(this);
             }
-            else if (serviceType == typeof(CitiesDataService))
+            else if (serviceType == typeof(DataService))
             {
-                return _citiesDataService ??= new CitiesDataService();
+                return _dataService ??= new DataService();
             }
             else if (serviceType == typeof(OpenWeatherService))
             {

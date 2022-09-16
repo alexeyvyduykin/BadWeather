@@ -1,4 +1,5 @@
-﻿using BadWeather.Services.Cities;
+﻿using BadWeather.Layers;
+using BadWeather.Services;
 using BadWeather.Services.OpenWeather;
 using BadWeather.Styles;
 using BruTile;
@@ -33,7 +34,7 @@ namespace BadWeather
             _dependencyResolver = dependencyResolver;
         }
 
-        public Map CreateMap()
+        public Map CreateMap(string type)
         {
             var lon0 = -15.0;
             var lat0 = 59.5;
@@ -61,8 +62,15 @@ namespace BadWeather
 
             var layer = CreateLayer();
 
-            map.Layers.Add(CreateWorldMapLayer());
-            //map.Layers.Add(CreateBingAerialMapLayer());                                 
+            if (string.Equals(type, "world"))
+            {
+                map.Layers.Add(CreateWorldMapLayer());
+            }
+            else if (string.Equals(type, "bing"))
+            {
+                map.Layers.Add(CreateBingAerialMapLayer());
+            }
+
             map.Layers.Add(layer);
 
             map.Home = n => n.NavigateTo(rect, Mapsui.Utilities.ScaleMethod.Fill);
@@ -72,11 +80,11 @@ namespace BadWeather
             return map;
         }
 
-        private static TileLayer CreateWorldMapLayer()
+        private static ILayer CreateWorldMapLayer()
         {
             var runningPath = AppDomain.CurrentDomain.BaseDirectory;
 
-            var path = string.Format("{0}resources\\world.mbtiles", Path.GetFullPath(Path.Combine(runningPath, @"..\..\..\")));
+            var path = string.Format("{0}src\\BadWeather.Avalonia\\BadWeather.Avalonia\\Assets\\world.mbtiles", Path.GetFullPath(Path.Combine(runningPath, @"..\..\..\..\..\..\")));
 
             var mbTilesTileSource = new MbTilesTileSource(new SQLiteConnectionString(path, true));
 
@@ -109,65 +117,22 @@ namespace BadWeather
 
         public ILayer CreateLayer()
         {
-            var citiesDataService = _dependencyResolver.GetExistingService<CitiesDataService>();
+            var dataService = _dependencyResolver.GetExistingService<DataService>();
             var openWeatherService = _dependencyResolver.GetExistingService<OpenWeatherService>();
-            var cities = citiesDataService.GetCitiesAsync().Result;
 
-            var features = cities.Select(city =>
-            {
-                var name = city.Name ?? throw new Exception();
-                var code = city.Code?.ToUpper() ?? throw new Exception();
-                var population = city.Population ?? throw new Exception();
-
-                var model = Task.Run(async () => await openWeatherService.GetModelAsync(name, code)).Result;
-
-                if (model == null)
-                {
-                    throw new Exception();
-                }
-
-                var feature = CreateFeature(model, population);
-
-                return feature;
-            });
-
-            var layer = new MemoryLayer
+            var layer = new CityLayer(dataService, openWeatherService)
             {
                 Name = "Points with labels",
-                Features = features.ToList(),
-                //Style = LayerStyles.CreatePointStyle(),
                 IsMapInfoLayer = true,
+                Style = new StyleCollection
+                {
+                    LayerStyles.CreatePointStyle(),
+                    LayerStyles.CreateTemperatureLabel(),
+                    LayerStyles.CreateCityLabel()
+                }
             };
 
-            var coll = new StyleCollection();
-
-            coll.Add(LayerStyles.CreatePointStyle());
-            coll.Add(LayerStyles.CreateTemperatureLabel());
-            coll.Add(LayerStyles.CreateCityLabel());
-
-            layer.Style = coll;
-
             return layer;
-        }
-
-        private static IFeature CreateFeature(OpenWeatherModel model, int population)
-        {
-            var temp = model.Main?.GetTemperatureInCelsius() ?? default;
-
-            var point = SphericalMercator.FromLonLat(model.Coordinate.Lon, model.Coordinate.Lat).ToMPoint();
-
-            var feature = new PointFeature(point);
-
-            feature["Name"] = model.Name;
-            feature["Population"] = population;
-            feature["Temperature"] = (int)Math.Round(temp);
-            feature["Pressure"] = model.Main?.Pressure;
-            feature["Humidity"] = model.Main?.Humidity;
-            feature["Cloudiness"] = model.Clouds?.All;
-            feature["Degree"] = model.Wind?.Degree;
-            feature["Speed"] = model.Wind?.Speed;
-
-            return feature;
         }
     }
 }

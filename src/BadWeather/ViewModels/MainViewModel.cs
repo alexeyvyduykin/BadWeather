@@ -1,4 +1,4 @@
-﻿using BadWeather.Services.Cities;
+﻿using BadWeather.Services;
 using BadWeather.Services.OpenWeather;
 using DynamicData;
 using Mapsui;
@@ -20,7 +20,7 @@ namespace BadWeather.ViewModels
         private readonly ObservableAsPropertyHelper<bool> _isLoading;
         private readonly IReadonlyDependencyResolver _dependencyResolver;
         private readonly Map _map;
-        private readonly CitiesDataService _citiesDataService;
+        private readonly DataService _dataService;
         private readonly CityProvider _provider;
 
         public MainViewModel(IReadonlyDependencyResolver dependencyResolver)
@@ -28,10 +28,10 @@ namespace BadWeather.ViewModels
             _dependencyResolver = dependencyResolver;
 
             _map = (Map)dependencyResolver.GetExistingService<IMap>();
-            _citiesDataService = dependencyResolver.GetExistingService<CitiesDataService>();
+            _dataService = dependencyResolver.GetExistingService<DataService>();
             var openWeatherService = dependencyResolver.GetExistingService<OpenWeatherService>();
 
-            _provider = new CityProvider(_citiesDataService, openWeatherService);
+            _provider = new CityProvider(_dataService, openWeatherService);
 
             Tip = new FeatureTip();
 

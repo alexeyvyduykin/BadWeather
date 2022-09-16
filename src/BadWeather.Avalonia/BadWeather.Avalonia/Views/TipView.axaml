@@ -64,7 +64,7 @@
 
 	<Border>
 		<Grid RowDefinitions="Auto, Auto">
-			<Grid ColumnDefinitions="Auto,*,*,*">
+			<Grid ColumnDefinitions="Auto,*,Auto,Auto">
 
 				<wi:ThemedWeatherIcon Key="{Binding Icon, Converter={StaticResource weatherKeyConv}}"
 									  Width="30"
@@ -76,11 +76,13 @@
 						   Classes="Subtitle1"/>
 
 				<TextBlock Grid.Column="2"
+						   HorizontalAlignment="Right"
 						   Padding="4,0,0,0"
 						   Text="{Binding Temperature}"
 						   Classes="Headline6"/>
 
 				<TextBlock Grid.Column="3"
+						   HorizontalAlignment="Right"
 						   Padding="4,0,0,0"
 						   Text="°C"
 						   Classes="Body1"/>

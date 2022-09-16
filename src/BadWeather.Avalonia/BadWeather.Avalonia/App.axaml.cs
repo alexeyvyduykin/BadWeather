@@ -20,6 +20,8 @@ namespace BadWeather.Avalonia
         {
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
+                RegisterBootstrapper(desktop);
+
                 var mainViewModel = GetExistingService<MainViewModel>();
 
                 desktop.MainWindow = new MainWindow
@@ -29,6 +31,8 @@ namespace BadWeather.Avalonia
             }
             else if (ApplicationLifetime is ISingleViewApplicationLifetime singleViewPlatform)
             {
+                RegisterBootstrapper(singleViewPlatform);
+
                 var mainViewModel = GetExistingService<MainViewModel>();
 
                 singleViewPlatform.MainView = new MainView
@@ -38,6 +42,22 @@ namespace BadWeather.Avalonia
             }
 
             base.OnFrameworkInitializationCompleted();
+        }
+
+        private static void RegisterBootstrapper(IApplicationLifetime lifetime)
+        {
+            // I only want to hear about errors
+            var logger = new ConsoleLogger() { Level = Splat.LogLevel.Error };
+            Locator.CurrentMutable.RegisterConstant(logger, typeof(ILogger));
+
+            if (lifetime is IClassicDesktopStyleApplicationLifetime)
+            {
+                Bootstrapper.RegisterDesktop(Locator.CurrentMutable, Locator.Current);
+            }
+            else if (lifetime is ISingleViewApplicationLifetime)
+            {
+                Bootstrapper.RegisterWeb(Locator.CurrentMutable, Locator.Current);
+            }
         }
     }
 }

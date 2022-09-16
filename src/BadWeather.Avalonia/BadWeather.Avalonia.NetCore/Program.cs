@@ -1,6 +1,5 @@
 ﻿using Avalonia;
 using Avalonia.ReactiveUI;
-using Splat;
 using System;
 
 namespace BadWeather.Avalonia.NetCore
@@ -13,18 +12,7 @@ namespace BadWeather.Avalonia.NetCore
         [STAThread]
         public static void Main(string[] args)
         {
-            RegisterBootstrapper();
-
             BuildAvaloniaApp().StartWithClassicDesktopLifetime(args);
-        }
-
-        private static void RegisterBootstrapper()
-        {
-            // I only want to hear about errors
-            var logger = new ConsoleLogger() { Level = Splat.LogLevel.Error };
-            Locator.CurrentMutable.RegisterConstant(logger, typeof(ILogger));
-
-            Bootstrapper.Register(Locator.CurrentMutable, Locator.Current);
         }
 
         // Avalonia configuration, don't remove; also used by visual designer.
