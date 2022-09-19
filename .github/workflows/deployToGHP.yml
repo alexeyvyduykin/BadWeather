@@ -1,0 +1,38 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+    
+jobs:
+  deploy-to-github-pages:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Setup .NET 6
+      uses: actions/setup-dotnet@v1.9.0
+
+    - name: Install wasm-tools
+      run: dotnet workload install wasm-tools
+
+    - name: Publish .NET Project
+      run: dotnet publish src/BadWeather.Avalonia/BadWeather.Avalonia.Web/BadWeather.Avalonia.Web.csproj -c Release --output release --nologo
+      
+      # autor hack (JamesIves)
+    - name: Change base-tag in index.html from / to BadWeather
+      run: sed -i 's/<base href="\/" \/>/<base href="\/BadWeather\/" \/>/g' release/wwwroot/index.html
+      
+    - name: Copy index.html to 404.html
+      run: cp release/wwwroot/index.html release/wwwroot/404.html
+      
+      # off jekyll
+    - name: Add .nojekyll file
+      run: touch release/wwwroot/.nojekyll
+      
+    - name: Uploading files to gh-pages branch
+      uses: JamesIves/github-pages-deploy-action@4.1.7
+      with:  
+       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+       branch: gh-pages
+       folder: release/wwwroot
