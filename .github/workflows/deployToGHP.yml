@@ -12,7 +12,12 @@ jobs:
     
     - name: Setup .NET 6
       uses: actions/setup-dotnet@v1.9.0
-
+      with:
+        dotnet-version: 6.0.x
+        source-url: https://nuget.pkg.github.com/alexeyvyduykin/index.json
+      env:
+        NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+        
     - name: Install wasm-tools
       run: dotnet workload install wasm-tools
 
